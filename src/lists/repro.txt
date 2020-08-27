@@ -1,0 +1,4 @@
+1 after.previous.next = before 
+2 before.previous = after.previous
+3 before.next = after
+4 after.previous = before 
