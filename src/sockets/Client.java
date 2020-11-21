@@ -14,7 +14,8 @@ public class Client implements MessageSender{
     MessageListener messageListener;
     Thread messageListenerThread;
 
-    public Client(String address) {
+    public Client(String address, MessageListener messageListener) {
+        this.messageListener = messageListener;
         MessageSender sender = this;
 
         String host = "localhost";
@@ -57,7 +58,7 @@ public class Client implements MessageSender{
         }
     }
 
-    private boolean isConnected() {
+    public boolean isConnected() {
         return  connection != null && outputStream != null && inputStream != null;
     }
 
@@ -75,6 +76,9 @@ public class Client implements MessageSender{
 
     @Override
     public void sendMessage(String msg) {
-
+        if (isConnected()) {
+            outputStream.println(msg);
+        }
     }
+
 }

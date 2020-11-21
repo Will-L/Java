@@ -29,11 +29,11 @@ public class BubbleSort {
         while(swapped) {
             swapped = false;
             for (int i = 1; i < records.size(); i++) {
-                CDRecord leftBarcode = records.get(i-1);
-                CDRecord rightBarcode = records.get(i);
-                if (leftBarcode.getBarcode() > rightBarcode.getBarcode()) {
-                    records.set(i, leftBarcode);
-                    records.set(i-1, rightBarcode);
+                CDRecord left = records.get(i-1);
+                CDRecord right = records.get(i);
+                if (left.getTitle().compareTo(right.getTitle()) < 0) {
+                    records.set(i, left);
+                    records.set(i-1, right);
                     swapped = true;
                 }
             }

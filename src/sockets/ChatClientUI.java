@@ -9,6 +9,9 @@ import java.util.ArrayList;
 public class ChatClientUI {
 
     JFrame window;
+    Client client;
+    JList chatHistory;
+    ArrayList<String> chatHistoryData;
 
     public ChatClientUI() {
 
@@ -18,6 +21,8 @@ public class ChatClientUI {
 
         Container content = window.getContentPane();
         content.setLayout(new GridBagLayout());
+
+        chatHistoryData = new ArrayList<>();
 
         // UI elements are located here
         createUI();
@@ -36,6 +41,15 @@ public class ChatClientUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Connect Pressed with " + serverAddress.getText());
+
+                client = new Client(serverAddress.getText(), new MessageListener() {
+                    @Override
+                    public void message(String msg, MessageSender sender) {
+                        // add msg to chat history
+                        chatHistoryData.add(msg);
+                        chatHistory.setListData(chatHistoryData.toArray());
+                    }
+                });
             }
         });
 
@@ -51,7 +65,15 @@ public class ChatClientUI {
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 System.out.println("Full Send" + chatBox.getText());
+                if (client != null) {
+                    for (int i = 0; client.isConnected() && i < 1000; i++)
+                    {
+                        client.sendMessage(chatBox.getText());
+                    }
+                }
+                chatBox.setText("");
             }
         });
     }

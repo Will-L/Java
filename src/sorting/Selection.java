@@ -23,7 +23,7 @@ public class Selection {
         for (int index = 0; index < records.size(); index++) {
             int smallestindex = index;
             for (int currentIndex = index+1; currentIndex < records.size(); currentIndex++) {
-                if (records.get(currentIndex).getBarcode() < records.get(smallestindex).getBarcode()) {
+                if (records.get(currentIndex).getAuthor().hashCode() < records.get(smallestindex).getAuthor().hashCode()) {
                     smallestindex = currentIndex;
                 }
             }
